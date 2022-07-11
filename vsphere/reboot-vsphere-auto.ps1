@@ -1,4 +1,28 @@
-# Reboot ESXi Server Function
+<#
+
+    vSphere Cluster Rolling Reboot Tool
+    
+    Bob Plankers (bob@plankers.com)
+    https://github.com/plankers/vmware-utils
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+    INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
+    USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    This script will take all the clusters in your environment that have DRS enabled and move through the hosts rebooting
+    them. Useful if you need to flash firmware (like if you used racadm on an iDRAC to stage firmware for the next reboot),
+    fix storage, set an advanced parameter that needs a reboot, etc.
+
+    It likely has errors and does weird things if your hosts don't do quite the right thing, so you might want to keep
+    an eye on it. Perfect is the enemy of done. I use it all the time on my testbeds but your mileage may vary. If you
+    have improvements send them along. -Bob
+
+#>
+
 Function RebootHost ($CurrentServer) {
     # Get VI-Server name
     $ServerName = $CurrentServer.Name
@@ -42,7 +66,7 @@ Function RebootHost ($CurrentServer) {
     
     # Check vSAN Health
     # I cannot get this to work, just gonna sleep for a bit instead. I'm open to suggestions (I've done very little troubleshooting of this, tbh)
-    
+
     #Start-Sleep 5
     #Write-Host "$CurrentServer pausing for vSAN stabilization..." -ForegroundColor White -NoNewline
     #do {
